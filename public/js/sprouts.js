@@ -1,7 +1,8 @@
-var page = 2
+var page = 0;
 $('.more-sprouts').hide();
 $('.more-sprouts').on('click', function(event) {
   event.preventDefault();
+
   var request = $.ajax({
     method: "GET",
     url: "/tweets.json?page=" + page
@@ -9,12 +10,10 @@ $('.more-sprouts').on('click', function(event) {
 
   request.done(function(data) {
     data.forEach(function(tweet) {
-      var tweetBody = tweet["text"];
-      var tweetUser = tweet["username"];
+      var tweetBody = "<div class='body'>" + tweet["text"] + "</div>";
+      var tweetUser = "<div class='user'>" + tweet["username"] + "</div>";
       $('.tweets').append(
-        "<li class='tweet'><div class='body'>" +
-        tweetBody + "</div><div class='user'>" + 
-        tweetUser + "</div></li>"
+        "<li class='tweet'>" + tweetBody + tweetUser + "</li>"
       );
     });
   });
